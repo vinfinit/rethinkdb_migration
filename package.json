@@ -1,0 +1,19 @@
+{
+  "name": "rethink_migration",
+  "version": "1.0.0",
+  "description": "Script for stf rethinkdb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vinfinit",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.1.4",
+    "bluebird": "^3.4.7",
+    "jsonfile": "^2.4.0",
+    "lodash": "^4.17.3",
+    "moment": "^2.17.1",
+    "rethinkdb": "^2.3.3"
+  }
+}
