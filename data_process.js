@@ -8,29 +8,9 @@ const script = require('./lib/script');
 const output = './data/output.json';
 const input = require('./data/deviceHistory.json');
 
-console.log(output.length);
-
-// util.normalize(input)
-//   .then(res => {
-//     jsonFile.writeFile(output, input, (err) => {
-//       if (err) {
-//         throw err;
-//       }
-//       util.verify(output)
-//         .then(res => {
-//           console.log(res);
-//         });
-//     })
-//   })
-
-// util.verify(output)
-//   .then(res => {
-//     console.log(res);
-//   });
-
-
 util.fix(input)
   .then(data => {
+    console.log('fixed')
     script.totalTimeByUser(data)
       .then(res => {
         let cum = 0;
@@ -40,7 +20,7 @@ util.fix(input)
         console.log(cum)
         jsonFile.writeFile(output, res, (err) => {
           if (err) {
-            throw err;
+            throw new Error(err)
           }
           console.log(res);
           console.log('saved!!!', input.length);
@@ -50,7 +30,7 @@ util.fix(input)
       throw new Error(err)
     })
   })
-  .catch(err => console.error)
+  .catch(console.error)
 
 // let d = _.filter(listOfData, i => i.serial === '323378DB255F00EC');
 // console.log(_.map(d, d => {
