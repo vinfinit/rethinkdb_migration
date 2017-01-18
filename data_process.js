@@ -10,14 +10,8 @@ const input = require('./data/deviceHistory.json');
 
 util.fix(input)
   .then(data => {
-    console.log('fixed')
-    script.totalTimeByUser(data)
+    script.sessionPerUser(data)
       .then(res => {
-        let cum = 0;
-        _.forIn(res, (val, key) => {
-          cum += val
-        })
-        console.log(cum)
         jsonFile.writeFile(output, res, (err) => {
           if (err) {
             throw new Error(err)
