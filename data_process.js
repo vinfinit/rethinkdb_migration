@@ -3,30 +3,54 @@ const _ = require('lodash');
 const jsonFile = require('jsonfile');
 
 const util = require('./lib/util');
+const script = require('./lib/script');
 
-const data = require('/Users/vladimir/Downloads/rethinkdb_dump_2016-12-28T12:46:54/stf/deviceHistory');
-console.log(data.length);
+const output = './data/output.json';
+const input = require('./data/deviceHistory.json');
 
-util.verify(data)
-  .then(res => {
-    console.log(res);
-    util.fix(data)
+console.log(output.length);
+
+// util.normalize(input)
+//   .then(res => {
+//     jsonFile.writeFile(output, input, (err) => {
+//       if (err) {
+//         throw err;
+//       }
+//       util.verify(output)
+//         .then(res => {
+//           console.log(res);
+//         });
+//     })
+//   })
+
+// util.verify(output)
+//   .then(res => {
+//     console.log(res);
+//   });
+
+
+util.fix(input)
+  .then(data => {
+    script.totalTimeByUser(data)
       .then(res => {
-        console.log('___________________');
-        util.verify(data)
-          .then(res => {
-            jsonFile.writeFile('deviceHistory.json', data, (err) => {
-              if (err) {
-                throw err;
-              }
-              console.log(res);
-              console.log('saved!!!', data.length);
-            })
-          })
+        let cum = 0;
+        _.forIn(res, (val, key) => {
+          cum += val
+        })
+        console.log(cum)
+        jsonFile.writeFile(output, res, (err) => {
+          if (err) {
+            throw err;
+          }
+          console.log(res);
+          console.log('saved!!!', input.length);
+        })
       })
-      .catch(err => console.error)
+    .catch(err => {
+      throw new Error(err)
+    })
   })
-  .catch(err => console.error);
+  .catch(err => console.error)
 
 // let d = _.filter(listOfData, i => i.serial === '323378DB255F00EC');
 // console.log(_.map(d, d => {
