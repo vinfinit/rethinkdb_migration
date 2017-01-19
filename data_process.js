@@ -10,7 +10,7 @@ const input = require('./data/deviceHistory.json');
 
 util.fix(input)
   .then(data => {
-    script.sessionPerUser(data)
+    script.fullStatistic(data)
       .then(res => {
         jsonFile.writeFile(output, res, (err) => {
           if (err) {
